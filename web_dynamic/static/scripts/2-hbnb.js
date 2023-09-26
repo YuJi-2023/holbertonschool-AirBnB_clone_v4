@@ -1,20 +1,37 @@
+const { resetWarningCache } = require("prop-types");
+const { async } = require("regenerator-runtime");
+
 $(function () {
-  const amenityIdList = []
+  const amenityDict = {};
+  const amenityList = [];
   $(".amenities input").change(function () {
-    const amenityId = $(this).data("id")
+    const amenityId = $(this).attr("data-id");
+    const amenityName = $(this).attr("data-name");
     if (this.checked) {
-      if (!amenityIdList.includes(amenityId)) {
+      if (!amenityList.includes(amenityId)) {
         //store the Aminity ID in a variable
-        amenityIdList.push(amenityId);
+        amenityDict[amenityId] = amenityName;
+        amenityList.push(amenityName);
       }
     } else {
       //remove the Aminity ID from the varialbe
-      if (amenityIdList.includes(amenityId)) {
-        amenityIdList.splice(amenityIdList.indexOf(amenityId),1);
+      if (amenityList.includes(amenityId)) {
+        amenityList.splice(amenityList.indexOf(amenityName),1);
       }
     }
     //update h4 tag with the list of amenities checked
-    const checkedAmenity = $(this).data("name")
-    $(".amenities h4").text(checkedAmenity);
+    const amenityText = amenityList.join(', ');
+    $(".amenities h4").text(amenityText);
   });
-});
+
+  
+  async function makeRequest() {
+      const response = await fetch('http://0.0.0.0:5001/api/v1/status/');
+      const code = response.status;
+      if (code === 200) {
+        const status = 'OK';
+        $("div#api_status").prop("class", "available");
+      } else {
+          $("div#api_status").removeClass("available");
+      }
+    }
