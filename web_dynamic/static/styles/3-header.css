@@ -3,14 +3,27 @@ header {
     height: 70px;
     width: 100%;
     border-bottom: 1px solid #CCCCCC;
+    display: flex;
+    flex-direction: row;
 }
 
 header .logo {
     background: url("../images/logo.png") no-repeat;
     left: 20px;
     height: 100%;
+    flex: 1;
 }
 
-header .available {
+header #api_status {
+    margin-top: 35px;
+    margin-right: 30px;
+    transform: translateY(-50%);
+    background-color: #cccccc;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+header #api_status.available {
     background-color: #ff545f;
 }

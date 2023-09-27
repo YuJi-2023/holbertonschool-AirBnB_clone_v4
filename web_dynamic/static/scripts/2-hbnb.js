@@ -1,7 +1,5 @@
-const { resetWarningCache } = require("prop-types");
-const { async } = require("regenerator-runtime");
-
 $(function () {
+  makeRequest();
   const amenityDict = {};
   const amenityList = [];
   $(".amenities input").change(function () {
@@ -26,7 +24,7 @@ $(function () {
 
   
   async function makeRequest() {
-      const response = await fetch('http://0.0.0.0:5001/api/v1/status/');
+      const response = await fetch('http://localhost:5001/api/v1/status/');
       const code = response.status;
       if (code === 200) {
         const status = 'OK';
@@ -35,3 +33,4 @@ $(function () {
           $("div#api_status").removeClass("available");
       }
     }
+  })
